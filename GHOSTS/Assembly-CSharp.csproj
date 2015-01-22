@@ -77,8 +77,11 @@
      <Compile Include="Assets\Qualcomm Augmented Reality\Scripts\WireframeTrackableEventHandler.cs" />
      <Compile Include="Assets\Qualcomm Augmented Reality\Scripts\WordBehaviour.cs" />
      <Compile Include="Assets\Scripts\Borrar.cs" />
+     <Compile Include="Assets\Scripts\Destruir.cs" />
      <Compile Include="Assets\Scripts\Disparar.cs" />
      <Compile Include="Assets\Scripts\Rotar_fantasmas.cs" />
+     <Compile Include="Assets\Scripts\comportamientoFantasma.cs" />
+     <Compile Include="Assets\Scripts\controlador.cs" />
      <Compile Include="Assets\Scripts\scriptDisparo.cs" />
      <Compile Include="Assets\SimpleParticlePack\Scripts\ParticleTester.cs" />
      <None Include="Assets\Qualcomm Augmented Reality\Shaders\VertexLitWithZ.shader" />

@@ -7,7 +7,7 @@ public class Rotar_fantasmas : MonoBehaviour {
 	public float rps =75.0f;
 	public float radio = 0.1f;
 	public float incr_radio = 0.5f;
-	public float escala =0.5f;
+	public float escala =0.1f;
 
 	public bool enabled= false;
 
@@ -24,7 +24,8 @@ public class Rotar_fantasmas : MonoBehaviour {
 		transform.Translate (-radio,0,0);
 		transform.RotateAround (centro.position, Vector3.up, rps * Time.deltaTime);
 		radio += incr_radio * Time.deltaTime;
-		escala += 0.2f * Time.deltaTime;
+		if(escala<3.0f)
+			escala += 0.1f * Time.deltaTime;
 	}
 
 	void OnBecameVisible() {
