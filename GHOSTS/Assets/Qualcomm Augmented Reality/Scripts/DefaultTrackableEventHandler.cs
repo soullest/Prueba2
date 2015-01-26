@@ -3,7 +3,6 @@ Copyright (c) 2010-2014 Qualcomm Connected Experiences, Inc.
 All Rights Reserved.
 Confidential and Proprietary - Qualcomm Connected Experiences, Inc.
 ==============================================================================*/
-
 using UnityEngine;
 
 /// <summary>
@@ -14,7 +13,8 @@ public class DefaultTrackableEventHandler : MonoBehaviour,
 {
     #region PRIVATE_MEMBER_VARIABLES
  
-    private TrackableBehaviour mTrackableBehaviour;
+		private TrackableBehaviour mTrackableBehaviour;
+		private EventosMarcador eve;
     
     #endregion // PRIVATE_MEMBER_VARIABLES
 
@@ -22,14 +22,21 @@ public class DefaultTrackableEventHandler : MonoBehaviour,
 
     #region UNTIY_MONOBEHAVIOUR_METHODS
     
-    void Start()
-    {
-        mTrackableBehaviour = GetComponent<TrackableBehaviour>();
-        if (mTrackableBehaviour)
-        {
-            mTrackableBehaviour.RegisterTrackableEventHandler(this);
-        }
-    }
+		void Start ()
+		{
+			GameObject controlador = GameObject.Find ("Controlador");
+			if (controlador != null) {
+				eve = controlador.GetComponent<EventosMarcador>();
+			}else {
+			Debug.Log ("No se ha encontrado el controlador del juego");
+			}
+				
+			
+			mTrackableBehaviour = GetComponent<TrackableBehaviour> ();
+			if (mTrackableBehaviour) {
+						mTrackableBehaviour.RegisterTrackableEventHandler (this);
+			}
+		}
 
     #endregion // UNTIY_MONOBEHAVIOUR_METHODS
 
@@ -37,25 +44,25 @@ public class DefaultTrackableEventHandler : MonoBehaviour,
 
     #region PUBLIC_METHODS
 
-    /// <summary>
-    /// Implementation of the ITrackableEventHandler function called when the
-    /// tracking state changes.
-    /// </summary>
-    public void OnTrackableStateChanged(
+		/// <summary>
+		/// Implementation of the ITrackableEventHandler function called when the
+		/// tracking state changes.
+		/// </summary>
+		public void OnTrackableStateChanged (
                                     TrackableBehaviour.Status previousStatus,
                                     TrackableBehaviour.Status newStatus)
-    {
-        if (newStatus == TrackableBehaviour.Status.DETECTED ||
-            newStatus == TrackableBehaviour.Status.TRACKED ||
-            newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED)
-        {
-            OnTrackingFound();
-        }
-        else
-        {
-            OnTrackingLost();
-        }
-    }
+		{
+				if (newStatus == TrackableBehaviour.Status.DETECTED ||
+						newStatus == TrackableBehaviour.Status.TRACKED ||
+						newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED) {
+						OnTrackingFound ();
+						eve.MarcadorEncontrado(gameObject.name.ToString());
+
+				} else {
+						OnTrackingLost ();
+						eve.MarcadorPerdido(gameObject.name.ToString());
+				}
+		}
 
     #endregion // PUBLIC_METHODS
 
@@ -64,46 +71,41 @@ public class DefaultTrackableEventHandler : MonoBehaviour,
     #region PRIVATE_METHODS
 
 
-    private void OnTrackingFound()
-    {
-        Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
-        Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
+		private void OnTrackingFound ()
+		{
+				Renderer[] rendererComponents = GetComponentsInChildren<Renderer> (true);
+				Collider[] colliderComponents = GetComponentsInChildren<Collider> (true);
 
-        // Enable rendering:
-        foreach (Renderer component in rendererComponents)
-        {
-            component.enabled = true;
-        }
+				// Enable rendering:
+				foreach (Renderer component in rendererComponents) {
+						component.enabled = true;
+				}
 
-        // Enable colliders:
-        foreach (Collider component in colliderComponents)
-        {
-            component.enabled = true;
-        }
+				// Enable colliders:
+				foreach (Collider component in colliderComponents) {
+						component.enabled = true;
+				}
 
-        Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
-    }
+				Debug.Log ("Trackable " + mTrackableBehaviour.TrackableName + " found");
+		}
 
+		private void OnTrackingLost ()
+		{
+				Renderer[] rendererComponents = GetComponentsInChildren<Renderer> (true);
+				Collider[] colliderComponents = GetComponentsInChildren<Collider> (true);
 
-    private void OnTrackingLost()
-    {
-        Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
-        Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
+				// Disable rendering:
+				foreach (Renderer component in rendererComponents) {
+						component.enabled = false;
+				}
 
-        // Disable rendering:
-        foreach (Renderer component in rendererComponents)
-        {
-            component.enabled = false;
-        }
+				// Disable colliders:
+				foreach (Collider component in colliderComponents) {
+						component.enabled = false;
+				}
 
-        // Disable colliders:
-        foreach (Collider component in colliderComponents)
-        {
-            component.enabled = false;
-        }
-
-        Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
-    }
+				Debug.Log ("Trackable " + mTrackableBehaviour.TrackableName + " lost");
+		}
 
     #endregion // PRIVATE_METHODS
 }
