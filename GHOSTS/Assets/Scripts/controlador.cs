@@ -22,6 +22,14 @@ public class controlador : MonoBehaviour {
 			Transform fant = Instantiate(fantasma,centroRotacion.transform.position,centroRotacion.transform.rotation) as Transform;
 			Rotar_fantasmas rot = fant.GetComponent<Rotar_fantasmas>();
 			rot.centro = centroRotacion;
+
+			/*Animation anim = fant.GetComponentInChildren<Animation>();
+			Debug.Log("Numero de animaciones: "+anim.GetClipCount());
+			foreach(AnimationState state in anim){
+				Debug.Log(state.name);
+			}
+			anim["Ghost_aparecer"].layer = 1;
+			anim.Play("Ghost_aparecer");*/
 		}
 	}
 }
