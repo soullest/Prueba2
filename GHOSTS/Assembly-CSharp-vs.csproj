@@ -82,6 +82,7 @@
      <Compile Include="Assets\Scripts\Disparar.cs" />
      <Compile Include="Assets\Scripts\EstadoJuego.cs" />
      <Compile Include="Assets\Scripts\EventosMarcador.cs" />
+     <Compile Include="Assets\Scripts\FantasmaModelo.cs" />
      <Compile Include="Assets\Scripts\GameOver.cs" />
      <Compile Include="Assets\Scripts\MuereFantasma.cs" />
      <Compile Include="Assets\Scripts\Rotar_fantasmas.cs" />
